@@ -1,1 +1,1 @@
-# KMPApp
+# Kotlin Multiplatform PokeDex App
