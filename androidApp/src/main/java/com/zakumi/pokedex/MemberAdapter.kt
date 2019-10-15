@@ -1,4 +1,4 @@
-package com.zakumi.kmpapp
+package com.zakumi.pokedex
 
 import android.view.LayoutInflater
 import android.view.View

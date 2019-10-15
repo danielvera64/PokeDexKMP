@@ -1,8 +1,8 @@
-package com.zakumi.model
+package com.zakumi.repository
 
 import com.zakumi.api.GitHubApi
 import com.zakumi.api.UpdateProblem
-import com.zakumi.presentation.DataRepository
+import com.zakumi.model.Member
 
 class MembersDataRepository(private val api: GitHubApi) : DataRepository {
 

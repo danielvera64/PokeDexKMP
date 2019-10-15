@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">KMPApp</string>
+    <string name="app_name">PokeDex</string>
     <string name="update_internet_connection">Check your internet connection.</string>
     <string name="unknow_error">Unknown error.</string>
     <string name="member_avatar">Member Avatar</string>

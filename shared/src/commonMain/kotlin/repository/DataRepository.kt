@@ -1,4 +1,4 @@
-package com.zakumi.presentation
+package com.zakumi.repository
 
 import com.zakumi.model.Member
 

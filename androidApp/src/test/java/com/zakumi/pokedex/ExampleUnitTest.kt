@@ -1,4 +1,4 @@
-package com.zakumi.kmpapp
+package com.zakumi.pokedex
 
 import org.junit.Test
 
