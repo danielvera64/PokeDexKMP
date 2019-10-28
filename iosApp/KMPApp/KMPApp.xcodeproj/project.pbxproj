@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1100F2FF2356566E00B3A7AF /* Shared.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1113F0142351659E00FE503B /* Shared.framework */; };
+		1100F3002356566E00B3A7AF /* Shared.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 1113F0142351659E00FE503B /* Shared.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		1113EFE42351648400FE503B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1113EFE32351648400FE503B /* AppDelegate.swift */; };
 		1113EFE62351648400FE503B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1113EFE52351648400FE503B /* SceneDelegate.swift */; };
 		1113EFE82351648400FE503B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1113EFE72351648400FE503B /* ViewController.swift */; };
@@ -15,8 +17,6 @@
 		1113EFF02351648700FE503B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1113EFEE2351648700FE503B /* LaunchScreen.storyboard */; };
 		1113EFFB2351648700FE503B /* KMPAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1113EFFA2351648700FE503B /* KMPAppTests.swift */; };
 		1113F0062351648700FE503B /* KMPAppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1113F0052351648700FE503B /* KMPAppUITests.swift */; };
-		1113F018235165C000FE503B /* Shared.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1113F0142351659E00FE503B /* Shared.framework */; };
-		1113F019235165C000FE503B /* Shared.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 1113F0142351659E00FE503B /* Shared.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		117FE1A223529E2000B014D3 /* MemberList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 117FE1A123529E2000B014D3 /* MemberList.swift */; };
 		117FE1A423529FFF00B014D3 /* MemberTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 117FE1A323529FFF00B014D3 /* MemberTableViewCell.swift */; };
 		117FE1A62352A03100B014D3 /* MemberTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 117FE1A52352A03100B014D3 /* MemberTableViewCell.xib */; };
@@ -40,13 +40,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		1113F01A235165C000FE503B /* Embed Frameworks */ = {
+		1100F3012356566E00B3A7AF /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				1113F019235165C000FE503B /* Shared.framework in Embed Frameworks */,
+				1100F3002356566E00B3A7AF /* Shared.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -54,6 +54,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		1100F2FE2356564400B3A7AF /* Shared.framework.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; name = Shared.framework.dSYM; path = "../../shared/build/xcode-frameworks/Shared.framework.dSYM"; sourceTree = "<group>"; };
 		1113EFE02351648400FE503B /* KMPApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KMPApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1113EFE32351648400FE503B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		1113EFE52351648400FE503B /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -79,7 +80,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1113F018235165C000FE503B /* Shared.framework in Frameworks */,
+				1100F2FF2356566E00B3A7AF /* Shared.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -159,6 +160,7 @@
 		1113F0132351659D00FE503B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				1100F2FE2356564400B3A7AF /* Shared.framework.dSYM */,
 				1113F0142351659E00FE503B /* Shared.framework */,
 			);
 			name = Frameworks;
@@ -175,7 +177,7 @@
 				1113EFDC2351648400FE503B /* Sources */,
 				1113EFDD2351648400FE503B /* Frameworks */,
 				1113EFDE2351648400FE503B /* Resources */,
-				1113F01A235165C000FE503B /* Embed Frameworks */,
+				1100F3012356566E00B3A7AF /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
