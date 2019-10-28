@@ -31,6 +31,8 @@ class MainActivity : AppCompatActivity(), MembersView {
 
     override var isUpdating: Boolean = false
 
+    private val TAG = "MainActivity"
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -39,6 +41,16 @@ class MainActivity : AppCompatActivity(), MembersView {
         setUpRecyclerView()
         presenter.onCreate()
         viewModel.onCreate()
+        bindViewModel()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        presenter.onDestroy()
+        viewModel.onDestroy()
+    }
+
+    private fun bindViewModel() {
         GlobalScope.launch(Dispatchers.Main) {
             viewModel
                 .pokeListChannel
@@ -48,12 +60,16 @@ class MainActivity : AppCompatActivity(), MembersView {
                 }
                 .collect()
         }
-    }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        presenter.onDestroy()
-        viewModel.onDestroy()
+        GlobalScope.launch {
+            viewModel
+                .errorChannel
+                .consumeAsFlow()
+                .onEach { error ->
+                    Log.e(TAG, ": $error")
+                }
+                .collect()
+        }
     }
 
     override fun onUpdate(members: List<Member>) {

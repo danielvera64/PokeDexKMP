@@ -2,7 +2,6 @@ package com.zakumi.viewModel
 
 import com.zakumi.ApplicationDispatcher
 import com.zakumi.api.PokeApi
-import com.zakumi.api.UpdateProblem
 import com.zakumi.model.Pokemon
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.launch
@@ -12,6 +11,7 @@ class PokeListViewModel(
 ):  CoroutinePresenter(ApplicationDispatcher) {
 
     val pokeListChannel = Channel<List<Pokemon>>()
+    val errorChannel = Channel<Exception>()
 
     override fun onCreate() {
         launch {
@@ -24,12 +24,11 @@ class PokeListViewModel(
         val newPokeList = try {
             api.getList()
         } catch (cause: Throwable) {
-            throw UpdateProblem()
+            (cause as Exception)
+                .let { errorChannel.send(it) }
+            throw cause
         }
         pokeListChannel.send(newPokeList.results)
     }
-
-//    override fun showError(error: Throwable) {
-//    }
 
 }

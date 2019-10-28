@@ -12,7 +12,7 @@ abstract class CoroutinePresenter(
     private val job = Job()
 
     private val exceptionHandler = CoroutineExceptionHandler { _, throwable ->
-
+        println("Caught $throwable")
     }
 
     override val coroutineContext: CoroutineContext
