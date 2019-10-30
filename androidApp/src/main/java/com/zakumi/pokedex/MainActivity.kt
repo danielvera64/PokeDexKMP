@@ -19,17 +19,13 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.consumeAsFlow
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
+import java.lang.ref.WeakReference
 
-class MainActivity : AppCompatActivity(), MembersView {
-
-    private val repository by lazy { (application as MainApplication).dataRepository }
-    private val presenter by lazy { MembersPresenter(this, repository = repository) }
+class MainActivity : AppCompatActivity() {
 
     private val viewModel by lazy { PokeListViewModel(PokeApi()) }
 
-    private lateinit var adapter: MemberAdapter
-
-    override var isUpdating: Boolean = false
+    private lateinit var adapter: PokemonListAdapter
 
     private val TAG = "MainActivity"
 
@@ -39,24 +35,30 @@ class MainActivity : AppCompatActivity(), MembersView {
 
         greetingTextView.text = Greeting().greeting()
         setUpRecyclerView()
-        presenter.onCreate()
-        viewModel.onCreate()
+        viewModel.getList()
         bindViewModel()
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        presenter.onDestroy()
         viewModel.onDestroy()
     }
 
+    private fun setUpRecyclerView() {
+        membersRecyclerView.layoutManager = LinearLayoutManager(this)
+        adapter = PokemonListAdapter(listOf(), WeakReference(viewModel))
+        membersRecyclerView.adapter = adapter
+    }
+
     private fun bindViewModel() {
-        GlobalScope.launch(Dispatchers.Main) {
+        GlobalScope.launch {
             viewModel
                 .pokeListChannel
                 .consumeAsFlow()
                 .onEach { list ->
                     Log.d("POKELIST", list.toString())
+                    adapter.list = list
+                    runOnUiThread { adapter.notifyDataSetChanged() }
                 }
                 .collect()
         }
@@ -70,29 +72,6 @@ class MainActivity : AppCompatActivity(), MembersView {
                 }
                 .collect()
         }
-    }
-
-    override fun onUpdate(members: List<Member>) {
-        adapter.members = members
-        runOnUiThread {
-            adapter.notifyDataSetChanged()
-        }
-    }
-
-    override fun showError(error: Throwable) {
-        val errorMessage = when (error) {
-            is UpdateProblem -> getString(R.string.update_internet_connection)
-            else -> getString(R.string.unknow_error)
-        }
-        runOnUiThread {
-            Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT).show()
-        }
-    }
-
-    private fun setUpRecyclerView() {
-        membersRecyclerView.layoutManager = LinearLayoutManager(this)
-        adapter = MemberAdapter(listOf())
-        membersRecyclerView.adapter = adapter
     }
 
 }

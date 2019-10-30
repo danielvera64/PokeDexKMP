@@ -11,16 +11,25 @@ class PokeListViewModel(
 ):  CoroutinePresenter(ApplicationDispatcher) {
 
     val pokeListChannel = Channel<List<Pokemon>>()
+    val pokemonChannel = Channel<Pokemon>()
     val errorChannel = Channel<Exception>()
 
-    override fun onCreate() {
+    override fun onCreate() {}
+
+    fun getList() {
         launch {
             pokeListChannel.send(emptyList())
-            update()
+            updateList()
         }
     }
 
-    private suspend fun update() {
+    fun getSpriteOf(name: String) {
+        launch {
+            getSprite(name)
+        }
+    }
+
+    private suspend fun updateList() {
         val newPokeList = try {
             api.getList()
         } catch (cause: Throwable) {
@@ -29,6 +38,17 @@ class PokeListViewModel(
             throw cause
         }
         pokeListChannel.send(newPokeList.results)
+    }
+
+    private suspend fun getSprite(name: String) {
+        val pokemon = try {
+            api.getSprite(name)
+        } catch (cause: Throwable) {
+            (cause as Exception)
+                .let { errorChannel.send(it) }
+            throw cause
+        }
+        pokemonChannel.send(pokemon)
     }
 
 }
