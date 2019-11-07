@@ -4,6 +4,7 @@ import com.zakumi.Endpoints
 import com.zakumi.Params
 import com.zakumi.Urls
 import com.zakumi.model.PokeList
+import com.zakumi.model.PokeSprite
 import com.zakumi.model.Pokemon
 import io.ktor.client.HttpClient
 import io.ktor.client.request.get
@@ -26,11 +27,15 @@ class PokeApi {
     }
 
 
-    suspend fun getSprite(name: String): Pokemon {
+    suspend fun getSprite(name: String): PokeSprite? {
         val result: String = client.get {
             url(Urls.PokeSpritesUrl + Endpoints.pokemon + name)
         }
-        return Json.nonstrict.parse(Pokemon.serializer().list, result).first()
+        val spriteList = Json.nonstrict.parse(PokeSprite.serializer().list, result)
+        if (spriteList.isEmpty()) {
+            return null
+        }
+        return spriteList.first()
     }
 
 }

@@ -2,6 +2,7 @@ package com.zakumi.viewModel
 
 import com.zakumi.ApplicationDispatcher
 import com.zakumi.api.PokeApi
+import com.zakumi.model.PokeSprite
 import com.zakumi.model.Pokemon
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.launch
@@ -11,7 +12,7 @@ class PokeListViewModel(
 ):  CoroutinePresenter(ApplicationDispatcher) {
 
     val pokeListChannel = Channel<List<Pokemon>>()
-    val pokemonChannel = Channel<Pokemon>()
+    val pokeSpriteChannel = Channel<PokeSprite?>()
     val errorChannel = Channel<Exception>()
 
     override fun onCreate() {}
@@ -23,9 +24,9 @@ class PokeListViewModel(
         }
     }
 
-    fun getSpriteOf(name: String) {
+    fun getSpriteOf(name: String, spriteChannel: Channel<PokeSprite?>) {
         launch {
-            getSprite(name)
+            getSprite(name, spriteChannel)
         }
     }
 
@@ -40,7 +41,7 @@ class PokeListViewModel(
         pokeListChannel.send(newPokeList.results)
     }
 
-    private suspend fun getSprite(name: String) {
+    private suspend fun getSprite(name: String, spriteChannel: Channel<PokeSprite?>) {
         val pokemon = try {
             api.getSprite(name)
         } catch (cause: Throwable) {
@@ -48,7 +49,7 @@ class PokeListViewModel(
                 .let { errorChannel.send(it) }
             throw cause
         }
-        pokemonChannel.send(pokemon)
+        spriteChannel.send(pokemon)
     }
 
 }
