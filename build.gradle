@@ -20,7 +20,7 @@ buildscript {
         maven { url "https://dl.bintray.com/aakira/maven" }
         google()
         jcenter()
-        
+
     }
     dependencies {
         classpath "com.android.tools.build:gradle:$gradle_version"
